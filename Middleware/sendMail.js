@@ -10,14 +10,13 @@ const sendMail = async (email, subject, text) => {
         host: "smtp.gmail.com",
         port: 465,
         auth: {
-          user: "websideotp@gmail.com",
-        //   pass: "gtvs hmjt mmgs pwsq",
-        pass: "lpgs occh xfbz vzkg",
+          user: process.env.Gmail,
+          pass: process.env.Password,
         },
       });
   
       await transport.sendMail({
-        from: "ntshyamsunder96@gmail.com",
+        from: "websideotp@gmail.com",
         to: email,
         subject,
         text,
