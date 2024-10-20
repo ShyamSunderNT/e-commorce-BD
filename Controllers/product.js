@@ -25,12 +25,13 @@ export const createProduct = async (req, res) => {
         category,
         price,
         stock,
-        image: image?.path,
+        image:`${process.env.CLOUDINARY_URL}/${image.filename}`,
       });
   
       res.status(201).json({
         message: "Product Created",
         product,
+        imageUrl: result.secure_url
       });
     } catch (error) {
       res.status(500).json({

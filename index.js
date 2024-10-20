@@ -7,6 +7,7 @@ import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -16,6 +17,7 @@ import routeProduct from "./Routers/productRoute.js"
 import cartRouter from "./Routers/cartRouter.js"
 import orderRouter from "./Routers/order.js"
 import addressRouter from  "./Routers/address.js"
+import { uploadFiles } from "./Middleware/Muilter.js";
 
 
 dotenv.config();
@@ -64,6 +66,15 @@ app.use((err, req, res, next) => {
   app.use("/api",cartRouter)
   app.use('/api',orderRouter)
   app.use("/api",addressRouter)
+
+  app.post('/upload', (req, res) => {
+    uploadFiles(req, res, (err) => {
+      if (err) {
+        return res.status(400).json({ message: 'Error uploading file', error: err });
+      }
+      res.status(200).json({ message: 'File uploaded successfully', file: req.file });
+    });
+  });
 
   app.get("/", (req, res) => {
     res.send("Welcome to the api");
